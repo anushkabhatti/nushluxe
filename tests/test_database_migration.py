@@ -1,25 +1,30 @@
-import json
+import shutil
 import sqlite3
+import tempfile
 import unittest
 from pathlib import Path
+
+from scripts.migrate_json_to_sqlite import (
+    create_tables,
+    load_items,
+    migrate_products,
+    migrate_routines,
+)
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
-ROUTINE_JSON = PROJECT_ROOT / "nushluxe_data_v2.json"
-PRODUCT_JSON = PROJECT_ROOT / "nushluxe_products.json"
+SAMPLE_ROUTINES = (
+    PROJECT_ROOT
+    / "sample_data"
+    / "sample_routines.json"
+)
 
-DATABASE_FILE = PROJECT_ROOT / "nushluxe_migration_test.db"
-
-
-def load_json_items(file_path, collection_name):
-    with open(file_path, "r", encoding="utf-8") as file:
-        data = json.load(file)
-
-    if isinstance(data, list):
-        return data
-
-    return data.get(collection_name, [])
+SAMPLE_PRODUCTS = (
+    PROJECT_ROOT
+    / "sample_data"
+    / "sample_products.json"
+)
 
 
 class TestDatabaseMigration(unittest.TestCase):
@@ -27,24 +32,65 @@ class TestDatabaseMigration(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
 
-        cls.connection = sqlite3.connect(
-            DATABASE_FILE
+        cls.temp_dir = tempfile.TemporaryDirectory()
+
+        temp_path = Path(cls.temp_dir.name)
+
+        cls.routine_json = (
+            temp_path / "sample_routines.json"
         )
 
-        cls.routines_json = load_json_items(
-            ROUTINE_JSON,
+        cls.product_json = (
+            temp_path / "sample_products.json"
+        )
+
+        cls.database_file = (
+            temp_path / "migration_test.db"
+        )
+
+        shutil.copy2(
+            SAMPLE_ROUTINES,
+            cls.routine_json
+        )
+
+        shutil.copy2(
+            SAMPLE_PRODUCTS,
+            cls.product_json
+        )
+
+        cls.routines_json = load_items(
+            cls.routine_json,
             "routines"
         )
 
-        cls.products_json = load_json_items(
-            PRODUCT_JSON,
+        cls.products_json = load_items(
+            cls.product_json,
             "products"
+        )
+
+        cls.connection = sqlite3.connect(
+            cls.database_file
+        )
+
+        create_tables(
+            cls.connection
+        )
+
+        migrate_routines(
+            cls.connection,
+            cls.routines_json
+        )
+
+        migrate_products(
+            cls.connection,
+            cls.products_json
         )
 
     @classmethod
     def tearDownClass(cls):
 
         cls.connection.close()
+        cls.temp_dir.cleanup()
 
     def test_routine_count_matches(self):
 

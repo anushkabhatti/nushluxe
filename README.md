@@ -38,7 +38,30 @@ Current capabilities include:
 - automated tests
 
 Real AI is intentionally disabled in this foundation version.
+---
 
+## Live Demo
+
+Nushluxe is live at:
+
+https://nushluxe.streamlit.app
+
+> Demo version: data may reset and is not intended for personal or sensitive information.
+
+---
+
+## How to Run Locally
+
+### Requirements
+
+- Python 3.12
+- Conda
+- Git
+
+### 1. Create the local environment
+
+```bash
+conda create -n nushluxe -c conda-forge python=3.12 -y
 ---
 
 ## Product Vision

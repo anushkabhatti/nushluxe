@@ -14,6 +14,8 @@ from ui.products_ui import render_products
 from ui.planning_ui import render_planning_summary
 
 from utils.data_setup import ensure_local_data_files
+
+
 # =========================================================
 # PAGE CONFIG
 # =========================================================
@@ -39,6 +41,7 @@ ROUTINE_DATA_FILE = (
 PRODUCT_DATA_FILE = (
     APP_FOLDER / "nushluxe_products.json"
 )
+
 ensure_local_data_files(
     ROUTINE_DATA_FILE,
     PRODUCT_DATA_FILE
@@ -366,6 +369,16 @@ st.markdown(
 
 
 # =========================================================
+# DEMO WARNING
+# =========================================================
+
+st.warning(
+    "Demo version — data is shared and may reset. "
+    "Don't enter personal information."
+)
+
+
+# =========================================================
 # BRAND
 # =========================================================
 
@@ -574,12 +587,14 @@ render_html(
 # =========================================================
 # MAIN MODULE NAVIGATION
 # =========================================================
+
 render_planning_summary(
     routine_repository,
     product_repository
 )
 
 st.markdown("---")
+
 maintenance_section, products_section = st.tabs(
     [
         "Maintenance",

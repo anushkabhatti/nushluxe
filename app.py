@@ -1,4 +1,5 @@
 import streamlit as st
+import tempfile
 
 from datetime import date
 from pathlib import Path
@@ -13,7 +14,10 @@ from ui.maintenance_ui import render_maintenance
 from ui.products_ui import render_products
 from ui.planning_ui import render_planning_summary
 
-from utils.data_setup import ensure_local_data_files
+from utils.data_setup import (
+    ensure_local_data_files,
+    reset_demo_data_files
+)
 
 
 # =========================================================
@@ -29,23 +33,42 @@ st.set_page_config(
 
 
 # =========================================================
-# FILE LOCATIONS + REPOSITORIES
+# FILE LOCATIONS + SESSION DATA
 # =========================================================
 
 APP_FOLDER = Path(__file__).resolve().parent
 
+
+if "demo_data_folder" not in st.session_state:
+
+    st.session_state.demo_data_folder = (
+        tempfile.mkdtemp(
+            prefix="nushluxe_demo_"
+        )
+    )
+
+
+SESSION_DATA_FOLDER = Path(
+    st.session_state.demo_data_folder
+)
+
+
 ROUTINE_DATA_FILE = (
-    APP_FOLDER / "nushluxe_data_v2.json"
+    SESSION_DATA_FOLDER
+    / "nushluxe_data_v2.json"
 )
 
 PRODUCT_DATA_FILE = (
-    APP_FOLDER / "nushluxe_products.json"
+    SESSION_DATA_FOLDER
+    / "nushluxe_products.json"
 )
+
 
 ensure_local_data_files(
     ROUTINE_DATA_FILE,
     PRODUCT_DATA_FILE
 )
+
 
 routine_repository = JsonRoutineRepository(
     ROUTINE_DATA_FILE
@@ -369,13 +392,39 @@ st.markdown(
 
 
 # =========================================================
-# DEMO WARNING
+# DEMO CONTROLS
 # =========================================================
 
 st.warning(
-    "Demo version — data is shared and may reset. "
-    "Don't enter personal information."
+    "Demo version — your session uses temporary sample data "
+    "and may reset. Don't enter personal information."
 )
+
+
+reset_column, feedback_column = st.columns(2)
+
+
+with reset_column:
+
+    if st.button(
+        "Reset demo data",
+        key="reset_demo_data"
+    ):
+
+        reset_demo_data_files(
+            ROUTINE_DATA_FILE,
+            PRODUCT_DATA_FILE
+        )
+
+        st.rerun()
+
+
+with feedback_column:
+
+    st.link_button(
+        "Share feedback",
+        "https://forms.gle/SGgN5J7HYzJqoTuPA"
+    )
 
 
 # =========================================================

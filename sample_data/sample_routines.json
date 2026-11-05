@@ -1,35 +1,4 @@
 {
   "schema_version": 1,
-  "routines": [
-    {
-      "id": "sample-routine-001",
-      "service": "Manicure",
-      "last_completed": "2026-10-20",
-      "frequency_weeks": 3,
-      "next_due": "2026-11-10",
-      "status": "UPCOMING",
-      "created_at": "2026-10-20T10:00:00",
-      "updated_at": "2026-10-20T10:00:00"
-    },
-    {
-      "id": "sample-routine-002",
-      "service": "Hair",
-      "last_completed": "2026-09-15",
-      "frequency_weeks": 10,
-      "next_due": "2026-11-24",
-      "status": "UPCOMING",
-      "created_at": "2026-09-15T10:00:00",
-      "updated_at": "2026-09-15T10:00:00"
-    },
-    {
-      "id": "sample-routine-003",
-      "service": "Eyebrows",
-      "last_completed": "2026-10-01",
-      "frequency_weeks": 4,
-      "next_due": "2026-10-29",
-      "status": "OVERDUE",
-      "created_at": "2026-10-01T10:00:00",
-      "updated_at": "2026-10-01T10:00:00"
-    }
-  ]
+  "routines": []
 }

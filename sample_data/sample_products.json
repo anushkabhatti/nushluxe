@@ -1,41 +1,4 @@
 {
   "schema_version": 1,
-  "products": [
-    {
-      "id": "sample-product-001",
-      "product": "Foundation",
-      "category": "Makeup",
-      "last_restocked": "2026-10-01",
-      "replenish_every_weeks": 8,
-      "next_replenish": "2026-11-26",
-      "estimated_cost": 65.0,
-      "status": "ON_TRACK",
-      "created_at": "2026-10-01T10:00:00",
-      "updated_at": "2026-10-01T10:00:00"
-    },
-    {
-      "id": "sample-product-002",
-      "product": "Shampoo",
-      "category": "Haircare",
-      "last_restocked": "2026-10-10",
-      "replenish_every_weeks": 4,
-      "next_replenish": "2026-11-07",
-      "estimated_cost": 30.0,
-      "status": "REPLENISH_SOON",
-      "created_at": "2026-10-10T10:00:00",
-      "updated_at": "2026-10-10T10:00:00"
-    },
-    {
-      "id": "sample-product-003",
-      "product": "Moisturizer",
-      "category": "Skincare",
-      "last_restocked": "2026-09-01",
-      "replenish_every_weeks": 4,
-      "next_replenish": "2026-09-29",
-      "estimated_cost": 50.0,
-      "status": "OVERDUE",
-      "created_at": "2026-09-01T10:00:00",
-      "updated_at": "2026-09-01T10:00:00"
-    }
-  ]
+  "products": []
 }

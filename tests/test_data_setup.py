@@ -2,7 +2,11 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from utils.data_setup import ensure_local_data_files
+from utils.data_setup import (
+    ensure_local_data_files,
+    get_sample_files,
+    reset_demo_data_files
+)
 
 
 class TestDataSetup(unittest.TestCase):
@@ -14,11 +18,13 @@ class TestDataSetup(unittest.TestCase):
             temp_path = Path(temp_dir)
 
             routine_file = (
-                temp_path / "nushluxe_data_v2.json"
+                temp_path
+                / "nushluxe_data_v2.json"
             )
 
             product_file = (
-                temp_path / "nushluxe_products.json"
+                temp_path
+                / "nushluxe_products.json"
             )
 
             self.assertFalse(
@@ -49,11 +55,13 @@ class TestDataSetup(unittest.TestCase):
             temp_path = Path(temp_dir)
 
             routine_file = (
-                temp_path / "nushluxe_data_v2.json"
+                temp_path
+                / "nushluxe_data_v2.json"
             )
 
             product_file = (
-                temp_path / "nushluxe_products.json"
+                temp_path
+                / "nushluxe_products.json"
             )
 
             routine_file.write_text(
@@ -77,6 +85,55 @@ class TestDataSetup(unittest.TestCase):
             self.assertEqual(
                 product_file.read_text(),
                 "existing product data"
+            )
+
+    def test_reset_restores_sample_data(self):
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+
+            temp_path = Path(temp_dir)
+
+            routine_file = (
+                temp_path
+                / "nushluxe_data_v2.json"
+            )
+
+            product_file = (
+                temp_path
+                / "nushluxe_products.json"
+            )
+
+            ensure_local_data_files(
+                routine_file,
+                product_file
+            )
+
+            routine_file.write_text(
+                "changed routine data"
+            )
+
+            product_file.write_text(
+                "changed product data"
+            )
+
+            reset_demo_data_files(
+                routine_file,
+                product_file
+            )
+
+            (
+                sample_routines,
+                sample_products
+            ) = get_sample_files()
+
+            self.assertEqual(
+                routine_file.read_text(),
+                sample_routines.read_text()
+            )
+
+            self.assertEqual(
+                product_file.read_text(),
+                sample_products.read_text()
             )
 
 

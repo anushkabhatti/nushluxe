@@ -1,0 +1,71 @@
+# -----------------------------------
+# Secrets
+# -----------------------------------
+
+.streamlit/secrets.toml
+.env
+.env.*
+
+# -----------------------------------
+# Python cache
+# -----------------------------------
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+# -----------------------------------
+# Mac files
+# -----------------------------------
+
+.DS_Store
+
+# -----------------------------------
+# IDE files
+# -----------------------------------
+
+.idea/
+
+# -----------------------------------
+# Local environments
+# -----------------------------------
+
+venv/
+.venv/
+env/
+
+# -----------------------------------
+# Nushluxe private/local data
+# -----------------------------------
+
+nushluxe_data.json
+nushluxe_data_backup.json
+nushluxe_data_v2.json
+nushluxe_products.json
+test_routines.json
+
+# -----------------------------------
+# Local database / migration tests
+# -----------------------------------
+
+*.db
+
+# -----------------------------------
+# Backups
+# -----------------------------------
+
+backups/
+
+# -----------------------------------
+# Temporary development backups
+# -----------------------------------
+
+app_backup_before_phase0.py
+app_before_products_ui.py
+app_before_repository_cutover.py
+
+# -----------------------------------
+# Logs
+# -----------------------------------
+
+*.log

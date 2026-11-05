@@ -1,5 +1,6 @@
 import streamlit as st
 import tempfile
+import shutil
 
 from datetime import date
 from pathlib import Path
@@ -14,10 +15,7 @@ from ui.maintenance_ui import render_maintenance
 from ui.products_ui import render_products
 from ui.planning_ui import render_planning_summary
 
-from utils.data_setup import (
-    ensure_local_data_files,
-    reset_demo_data_files
-)
+from utils.data_setup import ensure_local_data_files
 
 
 # =========================================================
@@ -37,6 +35,53 @@ st.set_page_config(
 # =========================================================
 
 APP_FOLDER = Path(__file__).resolve().parent
+
+
+def reset_demo_data_files(
+    routine_data_file,
+    product_data_file
+):
+    sample_folder = (
+        APP_FOLDER / "sample_data"
+    )
+
+    sample_routines = (
+        sample_folder
+        / "sample_routines.json"
+    )
+
+    sample_products = (
+        sample_folder
+        / "sample_products.json"
+    )
+
+    routine_data_file = Path(
+        routine_data_file
+    )
+
+    product_data_file = Path(
+        product_data_file
+    )
+
+    routine_data_file.parent.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    product_data_file.parent.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    shutil.copy2(
+        sample_routines,
+        routine_data_file
+    )
+
+    shutil.copy2(
+        sample_products,
+        product_data_file
+    )
 
 
 if "demo_data_folder" not in st.session_state:

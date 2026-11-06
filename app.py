@@ -41,6 +41,7 @@ def reset_demo_data_files(
     routine_data_file,
     product_data_file
 ):
+
     sample_folder = (
         APP_FOLDER / "sample_data"
     )
@@ -441,8 +442,9 @@ st.markdown(
 # =========================================================
 
 st.warning(
-    "Demo version — your session uses temporary sample data "
-    "and may reset. Don't enter personal information."
+    "Demo version — your session uses temporary data. "
+    "Refreshing the page starts a new blank session. "
+    "Don't enter personal information."
 )
 
 
